@@ -4,91 +4,83 @@
   <!-- Background -->
   <rect width="820" height="312" fill="#090E1A"/>
 
-  <!-- Subtle grid overlay -->
+  <!-- Grid overlay -->
   <defs>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.3" opacity="0.12"/>
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.3" opacity="0.1"/>
     </pattern>
+    <radialGradient id="glow" cx="75%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#090E1A" stop-opacity="0"/>
+    </radialGradient>
   </defs>
   <rect width="820" height="312" fill="url(#grid)"/>
-
-  <!-- Radial glow top-left -->
-  <radialGradient id="glow" cx="30%" cy="50%" r="55%">
-    <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.07"/>
-    <stop offset="100%" stop-color="#090E1A" stop-opacity="0"/>
-  </radialGradient>
   <rect width="820" height="312" fill="url(#glow)"/>
 
-  <!-- Corner brackets -->
-  <path d="M 28 56 L 28 28 L 56 28" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
-  <path d="M 792 56 L 792 28 L 764 28" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
-  <path d="M 28 256 L 28 284 L 56 284" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
-  <path d="M 792 256 L 792 284 L 764 284" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+  <!-- Corner brackets — only top corners + bottom-right (avoid bottom-left — profile pic zone) -->
+  <path d="M 28 56 L 28 28 L 56 28" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 792 56 L 792 28 L 764 28" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 792 256 L 792 284 L 764 284" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/>
 
-  <!-- ── LEFT SIDE: Logo + Info ─────────────────────────── -->
+  <!-- ── TOP BAND: Logo + Tagline centered ───────────────── -->
+  <!-- Gold top rule -->
+  <line x1="0" y1="0" x2="820" y2="0" stroke="#C9A84C" stroke-width="2.5"/>
 
-  <!-- Ledger book icon -->
-  <!-- Back cover -->
-  <rect x="52" y="86" width="62" height="80" rx="4" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.35"/>
-  <!-- Front cover -->
-  <rect x="62" y="76" width="62" height="80" rx="4" fill="#162035" stroke="#C9A84C" stroke-width="1.5"/>
-  <!-- Spine -->
-  <line x1="62" y1="76" x2="62" y2="156" stroke="#C9A84C" stroke-width="3.5" stroke-linecap="round"/>
-  <!-- Ruled lines -->
-  <line x1="74" y1="93" x2="112" y2="93" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="74" y1="106" x2="112" y2="106" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="74" y1="119" x2="112" y2="119" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
-  <line x1="74" y1="132" x2="112" y2="132" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
-  <!-- Column divider -->
-  <line x1="100" y1="78" x2="100" y2="152" stroke="#C9A84C" stroke-width="0.8" opacity="0.4"/>
+  <!-- Ledger book icon — top left, safe zone -->
+  <rect x="36" y="22" width="44" height="56" rx="3" fill="none" stroke="#C9A84C" stroke-width="1.3" opacity="0.35"/>
+  <rect x="44" y="16" width="44" height="56" rx="3" fill="#162035" stroke="#C9A84C" stroke-width="1.3"/>
+  <line x1="44" y1="16" x2="44" y2="72" stroke="#C9A84C" stroke-width="2.8" stroke-linecap="round"/>
+  <line x1="53" y1="26" x2="78" y2="26" stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round"/>
+  <line x1="53" y1="35" x2="78" y2="35" stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round"/>
+  <line x1="53" y1="44" x2="78" y2="44" stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round"/>
+  <line x1="53" y1="53" x2="78" y2="53" stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round"/>
+  <line x1="70" y1="18" x2="70" y2="68" stroke="#C9A84C" stroke-width="0.7" opacity="0.4"/>
 
-  <!-- Wordmark -->
-  <text x="140" y="112" font-family="Georgia, serif" font-size="18" font-weight="normal" fill="#EEE8D8" letter-spacing="4">LAKE NORMAN</text>
-  <text x="140" y="136" font-family="Georgia, serif" font-size="18" font-weight="normal" fill="#C9A84C" letter-spacing="9">LEDGER</text>
+  <!-- Wordmark — top, safe zone -->
+  <text x="102" y="42" font-family="Georgia, serif" font-size="16" fill="#EEE8D8" letter-spacing="4">LAKE NORMAN</text>
+  <text x="102" y="62" font-family="Georgia, serif" font-size="16" fill="#C9A84C" letter-spacing="8.5">LEDGER</text>
+  <line x1="102" y1="71" x2="310" y2="71" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+  <text x="103" y="83" font-family="Georgia, serif" font-size="8.5" fill="#4F637D" letter-spacing="2" font-style="italic">Professional Bookkeeping · Lake Norman, NC</text>
 
-  <!-- Thin rule under wordmark -->
-  <line x1="140" y1="148" x2="330" y2="148" stroke="#C9A84C" stroke-width="0.6" opacity="0.35"/>
+  <!-- Vertical divider -->
+  <line x1="340" y1="16" x2="340" y2="270" stroke="#C9A84C" stroke-width="0.6" opacity="0.2"/>
 
-  <!-- Tagline -->
-  <text x="141" y="163" font-family="Georgia, serif" font-size="9.5" fill="#4F637D" letter-spacing="2.5" font-style="italic">Professional Bookkeeping</text>
-
-  <!-- Divider line between logo area and contact -->
-  <line x1="52" y1="184" x2="330" y2="184" stroke="#C9A84C" stroke-width="0.5" opacity="0.2"/>
-
-  <!-- Contact details -->
-  <text x="52" y="204" font-family="Georgia, serif" font-size="10" fill="#8B9EBB" letter-spacing="1">Phillip@lakenormanledger.com</text>
-  <text x="52" y="220" font-family="Georgia, serif" font-size="10" fill="#8B9EBB" letter-spacing="1">(559) 360-9334  ·  Lake Norman, NC  ·  Fully Remote</text>
-
-  <!-- Value prop -->
-  <text x="52" y="250" font-family="Georgia, serif" font-size="11" fill="#C9A84C" letter-spacing="0.5" font-style="italic">Owned &amp; Operated by a Licensed CPA</text>
-
-  <!-- ── VERTICAL DIVIDER ───────────────────────────────── -->
-  <line x1="368" y1="44" x2="368" y2="268" stroke="#C9A84C" stroke-width="0.7" opacity="0.25"/>
-
-  <!-- ── RIGHT SIDE: Services ───────────────────────────── -->
-
-  <!-- Section label -->
-  <text x="600" y="60" font-family="Georgia, serif" font-size="9" fill="#C9A84C" text-anchor="middle" letter-spacing="4" opacity="0.85">WHAT WE OFFER</text>
-  <line x1="400" y1="70" x2="800" y2="70" stroke="#C9A84C" stroke-width="0.6" opacity="0.25"/>
+  <!-- ── RIGHT SIDE: Services — fully safe zone ──────────── -->
+  <text x="580" y="36" font-family="Georgia, serif" font-size="8.5" fill="#C9A84C" text-anchor="middle" letter-spacing="4" opacity="0.8">WHAT WE OFFER</text>
+  <line x1="365" y1="46" x2="795" y2="46" stroke="#C9A84C" stroke-width="0.5" opacity="0.22"/>
 
   <!-- Service 1 -->
-  <text x="400" y="104" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#EEE8D8" letter-spacing="0.5">Monthly Bookkeeping</text>
-  <text x="400" y="120" font-family="Georgia, serif" font-size="10.5" fill="#8B9EBB">Accurate, tax-ready books delivered every month — on time.</text>
-
-  <line x1="400" y1="134" x2="800" y2="134" stroke="#C9A84C" stroke-width="0.5" opacity="0.18"/>
+  <text x="365" y="74" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#EEE8D8">Monthly Bookkeeping</text>
+  <text x="365" y="90" font-family="Georgia, serif" font-size="10" fill="#8B9EBB">Accurate, tax-ready books delivered every month — on time.</text>
+  <line x1="365" y1="102" x2="795" y2="102" stroke="#C9A84C" stroke-width="0.4" opacity="0.18"/>
 
   <!-- Service 2 -->
-  <text x="400" y="158" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#EEE8D8" letter-spacing="0.5">Cleanup &amp; Catch-Up</text>
-  <text x="400" y="174" font-family="Georgia, serif" font-size="10.5" fill="#8B9EBB">Behind on your books? We rebuild and organize everything fast.</text>
-
-  <line x1="400" y1="188" x2="800" y2="188" stroke="#C9A84C" stroke-width="0.5" opacity="0.18"/>
+  <text x="365" y="124" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#EEE8D8">Cleanup &amp; Catch-Up</text>
+  <text x="365" y="140" font-family="Georgia, serif" font-size="10" fill="#8B9EBB">Behind on your books? We rebuild and organize everything fast.</text>
+  <line x1="365" y1="152" x2="795" y2="152" stroke="#C9A84C" stroke-width="0.4" opacity="0.18"/>
 
   <!-- Service 3 -->
-  <text x="400" y="212" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#EEE8D8" letter-spacing="0.5">Consulting &amp; Training</text>
-  <text x="400" y="228" font-family="Georgia, serif" font-size="10.5" fill="#8B9EBB">QuickBooks Online setup, training, and periodic accuracy reviews.</text>
+  <text x="365" y="174" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#EEE8D8">Consulting &amp; Training</text>
+  <text x="365" y="190" font-family="Georgia, serif" font-size="10" fill="#8B9EBB">QuickBooks setup, training, and periodic accuracy reviews.</text>
+  <line x1="365" y1="202" x2="795" y2="202" stroke="#C9A84C" stroke-width="0.5" opacity="0.22"/>
 
-  <line x1="400" y1="244" x2="800" y2="244" stroke="#C9A84C" stroke-width="0.6" opacity="0.25"/>
+  <!-- CTA website -->
+  <text x="580" y="222" font-family="Georgia, serif" font-size="10" fill="#C9A84C" text-anchor="middle" letter-spacing="2.5" opacity="0.85">lakenormanledger.com</text>
 
-  <!-- CTA -->
-  <text x="600" y="266" font-family="Georgia, serif" font-size="10" fill="#C9A84C" text-anchor="middle" letter-spacing="3" opacity="0.8">lakenormanledger.com</text>
+  <!-- ── LEFT LOWER: Value props — pushed up, above profile pic zone ── -->
+  <!-- Profile pic safe line guidance: avoid x:0-200, y:190-312 on desktop -->
+  <!-- We place content above y:185 on the left -->
+
+  <line x1="36" y1="110" x2="310" y2="110" stroke="#C9A84C" stroke-width="0.5" opacity="0.18"/>
+
+  <text x="36" y="132" font-family="Georgia, serif" font-size="11.5" fill="#EEE8D8" letter-spacing="0.3">Owned &amp; Operated by a Licensed CPA</text>
+  <text x="36" y="152" font-family="Georgia, serif" font-size="10" fill="#8B9EBB" letter-spacing="0.3">Big 4 accounting experience serving small businesses.</text>
+
+  <line x1="36" y1="164" x2="310" y2="164" stroke="#C9A84C" stroke-width="0.5" opacity="0.18"/>
+
+  <text x="36" y="182" font-family="Georgia, serif" font-size="10" fill="#8B9EBB">Phillip@lakenormanledger.com</text>
+  <text x="36" y="197" font-family="Georgia, serif" font-size="10" fill="#8B9EBB">(559) 360-9334  ·  Fully Remote</text>
+
+  <!-- Bottom gold rule -->
+  <line x1="0" y1="311" x2="820" y2="311" stroke="#C9A84C" stroke-width="2"/>
 </svg>
