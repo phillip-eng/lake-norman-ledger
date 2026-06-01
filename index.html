@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lake Norman Ledger | Professional Bookkeeping</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-deep:      #090E1A;
+      --bg-mid:       #101828;
+      --bg-card:      #162035;
+      --bg-card-alt:  #1C2A42;
+      --gold:         #C9A84C;
+      --gold-light:   #E5C97A;
+      --gold-dim:     rgba(201,168,76,0.18);
+      --text-primary: #EEE8D8;
+      --text-secondary:#8B9EBB;
+      --text-muted:   #4F637D;
+      --border:       rgba(201,168,76,0.18);
+      --radius:       10px;
+      --transition:   0.35s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .section-heading {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    /* ─── Reveal Animations ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── NAV ──────────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 22px 0;
+      transition: background var(--transition), padding var(--transition), backdrop-filter var(--transition);
+    }
+    #nav.scrolled {
+      background: rgba(9,14,26,0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Logo */
+    .nav-logo svg { height: 44px; width: auto; }
+
+    /* Nav links */
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      background: var(--gold);
+      color: #090E1A !important;
+      font-weight: 600;
+      font-size: 0.875rem;
+      border-radius: 6px;
+      letter-spacing: 0.03em;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .nav-cta:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    /* Mobile menu toggle */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+
+    /* ─── HERO ─────────────────────────────────────────────── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 140px 0 80px;
+    }
+
+    /* Animated background grid */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridShift 20s linear infinite;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60%;
+      background: linear-gradient(to top, var(--bg-deep), transparent);
+    }
+    @keyframes gridShift {
+      from { transform: translateY(0); }
+      to   { transform: translateY(60px); }
+    }
+
+    /* Radial glow */
+    .hero-glow {
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 5.5vw, 4.6rem);
+      font-weight: 300;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+      color: var(--text-primary);
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 500px;
+      margin-bottom: 44px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--gold);
+      color: #090E1A;
+      font-weight: 600;
+      font-size: 0.9rem;
+      border-radius: 7px;
+      letter-spacing: 0.03em;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(201,168,76,0.25);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      border-radius: 7px;
+      transition: border-color var(--transition), color var(--transition);
+    }
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .hero-stat-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* Hero image card */
+    .hero-image-wrap {
+      position: relative;
+    }
+    .hero-image-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+    }
+    .hero-image-card img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .hero-image-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(9,14,26,0.9), transparent);
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 28px;
+      left: 28px;
+      right: 28px;
+      z-index: 2;
+      background: rgba(22, 32, 53, 0.92);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .hero-badge-icon {
+      width: 38px; height: 38px;
+      background: var(--gold-dim);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero-badge-icon svg { width: 20px; height: 20px; }
+    .hero-badge-text strong {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .hero-badge-text span {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* Decorative gold corner */
+    .hero-image-corner {
+      position: absolute;
+      top: -16px; right: -16px;
+      width: 80px; height: 80px;
+      border-top: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      border-radius: 0 12px 0 0;
+      opacity: 0.5;
+    }
+    .hero-image-corner-bl {
+      position: absolute;
+      bottom: -16px; left: -16px;
+      width: 80px; height: 80px;
+      border-bottom: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      border-radius: 0 0 0 12px;
+      opacity: 0.5;
+    }
+
+    /* ─── SERVICES ─────────────────────────────────────────── */
+    #services {
+      padding: 120px 0;
+      background: var(--bg-mid);
+      position: relative;
+    }
+    #services::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .services-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 70px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 36px 32px;
+      transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(201,168,76,0.35);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--gold-dim);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+    .service-icon svg { width: 26px; height: 26px; }
+
+    .service-card h3 {
+      font-size: 1.55rem;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.75;
+    }
+
+    .service-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .service-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+    }
+    .service-bullets li::before {
+      content: '';
+      width: 5px; height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ─── PRICING ──────────────────────────────────────────── */
+    #pricing {
+      padding: 120px 0;
+      position: relative;
+    }
+
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 70px;
+    }
+    .pricing-header .section-sub {
+      margin: 0 auto;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    }
+
+    .pricing-card.featured {
+      background: linear-gradient(160deg, #1E2E4A, #162035);
+      border-color: rgba(201,168,76,0.45);
+      transform: scale(1.03);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+    }
+    .pricing-card.featured:hover {
+      transform: scale(1.03) translateY(-4px);
+    }
+    .pricing-card.featured::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    }
+
+    .pricing-badge {
+      display: inline-block;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-tier {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .pricing-tagline {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .pricing-price {
+      margin-bottom: 32px;
+    }
+    .pricing-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .pricing-period {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-left: 4px;
+    }
+    .pricing-range {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 6px;
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    .pricing-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .pricing-features li svg {
+      width: 16px; height: 16px;
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pricing-cta {
+      display: block;
+      text-align: center;
+      padding: 13px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: var(--transition);
+    }
+    .pricing-cta.outline {
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .pricing-cta.outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .pricing-cta.filled {
+      background: var(--gold);
+      color: #090E1A;
+    }
+    .pricing-cta.filled:hover {
+      background: var(--gold-light);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.3);
+    }
+
+    .pricing-note {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .pricing-note strong { color: var(--text-secondary); }
+
+    .pricing-disclaimer {
+      text-align: center;
+      margin-top: 18px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-style: italic;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    /* ─── PROCESS ──────────────────────────────────────────── */
+    #process {
+      padding: 120px 0;
+      background: var(--bg-mid);
+      position: relative;
+    }
+    #process::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .process-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr 60px 1fr;
+      align-items: start;
+      gap: 0;
+    }
+
+    .process-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 30px;
+    }
+    .process-connector svg {
+      color: var(--gold);
+      opacity: 0.4;
+      width: 24px; height: 24px;
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 0 16px;
+    }
+
+    .process-num-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .process-num {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 1.5px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--gold);
+      position: relative;
+    }
+    .process-num::before {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+
+    .process-step h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+    }
+    .process-step p {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+    }
+
+    /* ─── ABOUT ────────────────────────────────────────────── */
+    #about {
+      padding: 120px 0;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 90px;
+      align-items: center;
+    }
+
+    .about-image-wrap {
+      position: relative;
+    }
+    .about-image-frame {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+    }
+    .about-image-frame img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .about-gold-bar {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 100px; height: 100px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      border-radius: 0 0 12px 0;
+      opacity: 0.4;
+    }
+    .about-credential {
+      position: absolute;
+      top: 24px; right: -24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .about-credential-icon {
+      width: 34px; height: 34px;
+      background: var(--gold-dim);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-credential-icon svg { width: 18px; height: 18px; }
+    .about-credential strong {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .about-credential span {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+    }
+
+    .about-content .section-label { margin-top: 4px; }
+
+    .about-content h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 24px;
+    }
+    .about-content h2 span { color: var(--gold); font-style: italic; }
+
+    .about-content p {
+      font-size: 0.975rem;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      line-height: 1.85;
+    }
+
+    .about-values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 36px;
+    }
+    .about-value {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .about-value-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+    .about-value p {
+      font-size: 0.83rem;
+      margin: 0;
+    }
+
+    /* ─── CONTACT ──────────────────────────────────────────── */
+    #contact {
+      padding: 120px 0;
+      background: var(--bg-mid);
+      position: relative;
+    }
+    #contact::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 90px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      margin-bottom: 20px;
+    }
+    .contact-info h2 span { color: var(--gold); font-style: italic; }
+
+    .contact-info > p {
+      font-size: 0.975rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 44px;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .contact-detail-icon {
+      width: 44px; height: 44px;
+      background: var(--gold-dim);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+    .contact-detail-icon svg { width: 20px; height: 20px; }
+    .contact-detail-text strong {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .contact-detail-text a,
+    .contact-detail-text span {
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      transition: color var(--transition);
+    }
+    .contact-detail-text a:hover { color: var(--gold); }
+
+    /* Form */
+    .contact-form {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 44px 40px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--bg-mid);
+      border: 1px solid rgba(139,158,187,0.2);
+      border-radius: 8px;
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      outline: none;
+      -webkit-appearance: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-muted);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(201,168,76,0.5);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
+    }
+    .form-group textarea {
+      height: 130px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      width: 100%;
+      padding: 15px 24px;
+      background: var(--gold);
+      color: #090E1A;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      letter-spacing: 0.03em;
+      margin-top: 4px;
+    }
+    .form-submit:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(201,168,76,0.3);
+    }
+    .form-submit:active { transform: translateY(0); }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+    .form-success svg {
+      width: 52px; height: 52px;
+      color: var(--gold);
+      margin: 0 auto 16px;
+    }
+    .form-success h3 {
+      font-size: 1.6rem;
+      margin-bottom: 10px;
+    }
+    .form-success p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ─── FOOTER ───────────────────────────────────────────── */
+    footer {
+      background: #060B15;
+      border-top: 1px solid var(--border);
+      padding: 60px 0 36px;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-top: 20px;
+      max-width: 300px;
+    }
+
+    .footer-col h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .footer-col ul li a {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-bottom p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .footer-bottom span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .footer-bottom span a {
+      color: var(--gold);
+      transition: opacity var(--transition);
+    }
+    .footer-bottom span a:hover { opacity: 0.8; }
+
+    /* ─── Responsive ───────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-image-wrap { display: none; }
+      .services-header { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 56px; }
+      .about-image-wrap { max-width: 380px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 56px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        inset: 0;
+        background: rgba(9,14,26,0.97);
+        backdrop-filter: blur(20px);
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        z-index: 999;
+      }
+      .nav-links.open a { font-size: 1.3rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.featured { transform: scale(1); }
+      .process-steps { grid-template-columns: 1fr; gap: 48px; }
+      .process-connector { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .about-credential { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 20px; }
+      .contact-form { padding: 30px 24px; }
+      .hero-stats { gap: 24px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── NAV ─────────────────────────────────────────────── -->
+  <nav id="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <!-- Logo SVG -->
+        <a href="#home" class="nav-logo" aria-label="Lake Norman Ledger">
+          <svg viewBox="0 0 380 90" height="48" width="auto" xmlns="http://www.w3.org/2000/svg">
+            <!-- Back cover -->
+            <rect x="4" y="14" width="52" height="62" rx="4" fill="none" stroke="#C9A84C" stroke-width="1.8" opacity="0.4"/>
+            <!-- Front cover -->
+            <rect x="14" y="8" width="52" height="62" rx="4" fill="#162035" stroke="#C9A84C" stroke-width="1.8"/>
+            <!-- Spine -->
+            <line x1="14" y1="8" x2="14" y2="70" stroke="#C9A84C" stroke-width="2.8"/>
+            <!-- Ledger ruled lines -->
+            <line x1="26" y1="24" x2="56" y2="24" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+            <line x1="26" y1="35" x2="56" y2="35" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+            <line x1="26" y1="46" x2="56" y2="46" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+            <line x1="26" y1="57" x2="56" y2="57" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+            <!-- Column divider -->
+            <line x1="46" y1="20" x2="46" y2="68" stroke="#C9A84C" stroke-width="0.9" opacity="0.45"/>
+            <!-- Wordmark -->
+            <text x="84" y="42" font-family="'Cormorant Garamond', Georgia, serif" font-size="21" font-weight="400" fill="#EEE8D8" letter-spacing="5">LAKE NORMAN</text>
+            <text x="84" y="66" font-family="'Cormorant Garamond', Georgia, serif" font-size="21" font-weight="300" fill="#C9A84C" letter-spacing="11">LEDGER</text>
+            <!-- Thin rule between name and tagline -->
+            <line x1="84" y1="74" x2="372" y2="74" stroke="#C9A84C" stroke-width="0.6" opacity="0.3"/>
+          </svg>
+        </a>
+
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home" onclick="closeMenu()">Home</a></li>
+          <li><a href="#services" onclick="closeMenu()">Services</a></li>
+          <li><a href="#pricing" onclick="closeMenu()">Pricing</a></li>
+          <li><a href="#process" onclick="closeMenu()">Process</a></li>
+          <li><a href="#about" onclick="closeMenu()">About</a></li>
+          <li><a href="#contact" class="nav-cta" onclick="closeMenu()">Get Started</a></li>
+        </ul>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────── -->
+  <section id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-glow"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <div class="hero-eyebrow reveal">Professional Bookkeeping | Owned & Operated by a Licensed CPA</div>
+          <h1 class="hero-title reveal reveal-delay-1">
+            The Financial Clarity<br>Your Business <em>Deserves.</em>
+          </h1>
+          <p class="hero-desc reveal reveal-delay-2">
+            As a CPA dedicated solely to bookkeeping, I take the burden off your shoulders so you can focus on what you do best. Accurate records, organized books, and the peace of mind that comes with professional oversight.
+          </p>
+          <div class="hero-actions reveal reveal-delay-3">
+            <a href="#contact" class="btn-primary">
+              Get a Free Estimate
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="#services" class="btn-secondary">View Services</a>
+          </div>
+          <div class="hero-stats reveal reveal-delay-4">
+            <div>
+              <div class="hero-stat-num">Big 4</div>
+              <div class="hero-stat-label">Trained CPA</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">100%</div>
+              <div class="hero-stat-label">Remote Service</div>
+            </div>
+            <div>
+              <div class="hero-stat-num">QBO</div>
+              <div class="hero-stat-label">Specialist</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image-wrap reveal reveal-delay-2">
+          <div class="hero-image-corner"></div>
+          <div class="hero-image-corner-bl"></div>
+          <div class="hero-image-card">
+            <img src="assets/headshot.png" alt="Phillip Christopher, CPA – Founder of Lake Norman Ledger" />
+            <div class="hero-badge">
+              <div class="hero-badge-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="hero-badge-text">
+                <strong>Phillip Christopher, CPA</strong>
+                <span>Founder · Lake Norman Ledger</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─────────────────────────────────────────── -->
+  <section id="services">
+    <div class="container">
+      <div class="services-header">
+        <div>
+          <div class="section-label reveal">What We Offer</div>
+          <h2 class="section-heading reveal reveal-delay-1">Services Built for<br>Small Businesses</h2>
+        </div>
+        <p class="section-sub reveal reveal-delay-2">
+          Whether you're a startup finding your footing or an established business ready to get organized, we have a service that fits where you are right now.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <!-- Monthly Bookkeeping -->
+        <div class="service-card reveal">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="14" x2="8" y2="14"/><line x1="12" y1="14" x2="12" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/></svg>
+          </div>
+          <h3>Monthly Bookkeeping</h3>
+          <p>Stay on top of your finances with a reliable monthly process that keeps your books accurate and tax-ready.</p>
+          <ul class="service-bullets">
+            <li>Bank & credit cards reconciled monthly</li>
+            <li>Smart rules for automated categorization</li>
+            <li>Financial statements delivered within 15 business days</li>
+            <li>Email support for quick money questions</li>
+          </ul>
+        </div>
+
+        <!-- Cleanup -->
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          </div>
+          <h3>Cleanup & Catch-Up</h3>
+          <p>Behind on your books? We fix and organize everything fast so you can file taxes and make decisions with confidence.</p>
+          <ul class="service-bullets">
+            <li>Rebuilds months or years of records</li>
+            <li>Advanced tools to import bank statements</li>
+            <li>Every transaction reviewed and corrected</li>
+            <li>Tax-ready handoff for your CPA</li>
+          </ul>
+        </div>
+
+        <!-- Consulting -->
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Consulting & Training</h3>
+          <p>Keep bookkeeping in-house with expert QuickBooks setup, training, and periodic reviews to keep your team accurate.</p>
+          <ul class="service-bullets">
+            <li>Personalized QuickBooks Online setup</li>
+            <li>Chart of accounts and workflow optimization</li>
+            <li>Monthly or quarterly accuracy reviews</li>
+            <li>Option to upgrade to monthly service anytime</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PRICING ───────────────────────────────────────────── -->
+  <section id="pricing">
+    <div class="container">
+      <div class="pricing-header">
+        <div class="section-label reveal">Transparent Pricing</div>
+        <h2 class="section-heading reveal reveal-delay-1">Simple Plans. No Surprises.</h2>
+        <p class="section-sub reveal reveal-delay-2">No contracts. First month satisfaction guarantee — or you don't pay.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Essential -->
+        <div class="pricing-card reveal">
+          <div class="pricing-tier">Essential</div>
+          <div class="pricing-tagline">Simple, accurate bookkeeping every month</div>
+          <div class="pricing-price">
+            <span class="pricing-amount">$250</span><span class="pricing-period">/ mo</span>
+            <div class="pricing-range">Range: $250 – $350 / month</div>
+          </div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Monthly bank and card reconciliation
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Expense categorization with bank rules
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Monthly financial statements
+            </li>
+          </ul>
+          <a href="#contact" class="pricing-cta outline">Get Started</a>
+        </div>
+
+        <!-- Professional (featured) -->
+        <div class="pricing-card featured reveal reveal-delay-1">
+          <div class="pricing-badge">Most Popular</div>
+          <div class="pricing-tier">Professional</div>
+          <div class="pricing-tagline">Clear numbers that support growth</div>
+          <div class="pricing-price">
+            <span class="pricing-amount">$350</span><span class="pricing-period">/ mo</span>
+            <div class="pricing-range">Range: $350 – $450 / month</div>
+          </div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Everything in Essential
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              AR & AP management — invoice tracking, bill facilitation, and payment follow-up
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Quarterly performance summary
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Priority support
+            </li>
+          </ul>
+          <a href="#contact" class="pricing-cta filled">Get Started</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="pricing-card reveal reveal-delay-2">
+          <div class="pricing-tier">Premium</div>
+          <div class="pricing-tagline">Hands-on support and advanced reporting</div>
+          <div class="pricing-price">
+            <span class="pricing-amount">$450</span><span class="pricing-period">/ mo</span>
+            <div class="pricing-range">Range: $450 – $750 / month</div>
+          </div>
+          <div class="pricing-divider"></div>
+          <ul class="pricing-features">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Everything in Professional
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Monthly Financial Insights video
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Full-service AR & AP management — ideal for businesses with high invoice or expense volume
+            </li>
+          </ul>
+          <a href="#contact" class="pricing-cta outline">Get Started</a>
+        </div>
+      </div>
+
+      <p class="pricing-note reveal">
+        <strong>Not sure which plan fits?</strong> Reach out and we'll figure it out together — no pressure.
+      </p>
+      <p class="pricing-disclaimer reveal">
+        Prices shown are starting ranges. Final pricing is determined during the estimate phase based on transaction volume, number of accounts, and overall business complexity.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── PROCESS ───────────────────────────────────────────── -->
+  <section id="process">
+    <div class="container">
+      <div class="process-header">
+        <div class="section-label reveal">How It Works</div>
+        <h2 class="section-heading reveal reveal-delay-1">Three Steps to Financial Peace of Mind</h2>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="process-num-wrap">
+            <div class="process-num">1</div>
+          </div>
+          <h3>Reach Out</h3>
+          <p>Submit the contact form and we'll respond promptly to learn about your business and its bookkeeping needs.</p>
+        </div>
+
+        <div class="process-connector reveal reveal-delay-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="process-step reveal reveal-delay-1">
+          <div class="process-num-wrap">
+            <div class="process-num">2</div>
+          </div>
+          <h3>Assess & Estimate</h3>
+          <p>We review your current accounts in depth to determine a timeline and provide a clear, upfront estimate — no hidden fees.</p>
+        </div>
+
+        <div class="process-connector reveal reveal-delay-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="process-step reveal reveal-delay-2">
+          <div class="process-num-wrap">
+            <div class="process-num">3</div>
+          </div>
+          <h3>Ongoing Partnership</h3>
+          <p>You stop stressing about finances and start knowing exactly where your money goes — month after month, always on time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-image-wrap reveal">
+          <div class="about-image-frame">
+            <img src="assets/headshot.png" alt="Phillip Christopher, CPA" />
+          </div>
+          <div class="about-gold-bar"></div>
+          <div class="about-credential">
+            <div class="about-credential-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+            </div>
+            <div>
+              <strong>Certified Public Accountant</strong>
+              <span>Big 4 Experience</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-content">
+          <div class="section-label reveal">About</div>
+          <h2 class="reveal reveal-delay-1">Meet <span>Phillip Christopher,</span> CPA</h2>
+          <p class="reveal reveal-delay-2">
+            Hi, I'm Phillip — the founder of Lake Norman Ledger. As a CPA with experience serving large public companies at a Big 4 accounting firm, I started this business to bring that same level of professionalism and attention to detail to small businesses in my local community.
+          </p>
+          <p class="reveal reveal-delay-2">
+            Lake Norman Ledger is a fully remote bookkeeping firm based in the Lake Norman area — just outside of Charlotte. We specialize in QuickBooks Online and provide full-service bookkeeping with clarity, communication, and consistency.
+          </p>
+          <p class="reveal reveal-delay-2">
+            My goal is simple: give business owners the peace of mind and financial confidence they need to make smart decisions — without the stress.
+          </p>
+
+          <div class="about-values">
+            <div class="about-value reveal reveal-delay-2">
+              <div class="about-value-title">Clarity</div>
+              <p>You always know where your money stands — no jargon, no surprises.</p>
+            </div>
+            <div class="about-value reveal reveal-delay-3">
+              <div class="about-value-title">Precision</div>
+              <p>Every number is verified and every record is reconciled on time.</p>
+            </div>
+            <div class="about-value reveal reveal-delay-2">
+              <div class="about-value-title">Accessibility</div>
+              <p>Big 4 expertise at a price that makes sense for small businesses.</p>
+            </div>
+            <div class="about-value reveal reveal-delay-3">
+              <div class="about-value-title">Partnership</div>
+              <p>Your success is personal to me — I treat your business like my own.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ───────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner">
+        <div class="contact-info">
+          <div class="section-label reveal">Contact</div>
+          <h2 class="reveal reveal-delay-1">Let's Talk About<br><span>Your Books.</span></h2>
+          <p class="reveal reveal-delay-2">
+            Ready to stop stressing about your finances? Fill out the form and we'll get back to you promptly to discuss your business and what we can do together.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-detail reveal reveal-delay-2">
+              <div class="contact-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <div class="contact-detail-text">
+                <strong>Email</strong>
+                <a href="mailto:Phillip@lakenormanledger.com">Phillip@lakenormanledger.com</a>
+              </div>
+            </div>
+            <div class="contact-detail reveal reveal-delay-3">
+              <div class="contact-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.39a2 2 0 0 1 2-2.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              </div>
+              <div class="contact-detail-text">
+                <strong>Phone</strong>
+                <a href="tel:+15593609334">(559) 360-9334</a>
+              </div>
+            </div>
+            <div class="contact-detail reveal reveal-delay-4">
+              <div class="contact-detail-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="contact-detail-text">
+                <strong>Location</strong>
+                <span>Lake Norman Area · Charlotte, NC · Fully Remote</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--
+          CONTACT FORM SETUP:
+          This form uses Formspree (free) to send submissions to your email.
+          To activate it:
+          1. Go to https://formspree.io and create a free account
+          2. Create a new form and copy your Form ID (looks like "xyzabcde")
+          3. Replace "YOUR_FORM_ID" in the action URL below with your actual Form ID
+        -->
+        <div class="contact-form reveal reveal-delay-1">
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="Jane" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Smith" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="businessName">Business Name</label>
+              <input type="text" id="businessName" name="businessName" placeholder="Smith & Co." />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone (optional)</label>
+                <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="service">Service Interest</label>
+              <select id="service" name="service">
+                <option value="" disabled selected>Select a service...</option>
+                <option value="monthly">Monthly Bookkeeping</option>
+                <option value="cleanup">Cleanup / Catch-Up</option>
+                <option value="consulting">Consulting & Training</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Tell us about your business</label>
+              <textarea id="message" name="message" placeholder="A little about your business and what you're looking for..."></textarea>
+            </div>
+            <input type="hidden" name="_subject" value="New inquiry from Lake Norman Ledger website" />
+            <button type="submit" class="form-submit">Send Message</button>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <h3>Message Sent!</h3>
+            <p>Thanks for reaching out. Phillip will get back to you within one business day.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <a href="#home">
+            <svg viewBox="0 0 480 130" height="72" width="auto" xmlns="http://www.w3.org/2000/svg">
+              <!-- Back cover -->
+              <rect x="4" y="22" width="52" height="68" rx="4" fill="none" stroke="#C9A84C" stroke-width="1.8" opacity="0.4"/>
+              <!-- Front cover -->
+              <rect x="14" y="14" width="52" height="68" rx="4" fill="#162035" stroke="#C9A84C" stroke-width="1.8"/>
+              <!-- Spine -->
+              <line x1="14" y1="14" x2="14" y2="82" stroke="#C9A84C" stroke-width="2.8"/>
+              <!-- Ledger ruled lines -->
+              <line x1="26" y1="30" x2="56" y2="30" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="26" y1="42" x2="56" y2="42" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="26" y1="54" x2="56" y2="54" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+              <line x1="26" y1="66" x2="56" y2="66" stroke="#C9A84C" stroke-width="1.3" stroke-linecap="round"/>
+              <!-- Column divider -->
+              <line x1="46" y1="22" x2="46" y2="80" stroke="#C9A84C" stroke-width="0.9" opacity="0.45"/>
+              <!-- Wordmark -->
+              <text x="84" y="52" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="400" fill="#EEE8D8" letter-spacing="5">LAKE NORMAN</text>
+              <text x="84" y="76" font-family="'Cormorant Garamond', Georgia, serif" font-size="22" font-weight="300" fill="#C9A84C" letter-spacing="11.5">LEDGER</text>
+              <!-- Rule -->
+              <line x1="84" y1="88" x2="420" y2="88" stroke="#C9A84C" stroke-width="0.6" opacity="0.3"/>
+              <!-- Tagline -->
+              <text x="85" y="104" font-family="'Cormorant Garamond', Georgia, serif" font-size="11" fill="#4F637D" letter-spacing="2.5" font-style="italic">Professional Bookkeeping</text>
+            </svg>
+          </a>
+          <p>Professional bookkeeping for small businesses in the Lake Norman area and beyond. Fully remote. CPA-backed. Always accurate.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#process">Our Process</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="mailto:Phillip@lakenormanledger.com">Phillip@lakenormanledger.com</a></li>
+            <li><a href="tel:+15593609334">(559) 360-9334</a></li>
+            <li><a href="#contact">Lake Norman, NC Area</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Lake Norman Ledger. All rights reserved.</p>
+        <span>Built for <a href="#home">Lake Norman Ledger</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── JS ───────────────────────────────────────────────── -->
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Mobile menu
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+    function closeMenu() { links.classList.remove('open'); }
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+
+    // Trigger hero reveals immediately
+    document.querySelectorAll('#home .reveal').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 100);
+    });
+
+    // Contact form success state (for Formspree AJAX)
+    const form = document.getElementById('contactForm');
+    const successMsg = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const btn = form.querySelector('.form-submit');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          successMsg.style.display = 'block';
+        } else {
+          btn.textContent = 'Something went wrong — try again';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Something went wrong — try again';
+        btn.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+</html>

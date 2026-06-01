@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 130" width="480" height="130">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&amp;display=swap');
+    </style>
+    <!-- Thin circle clip -->
+  </defs>
+
+  <!-- Background -->
+  <rect width="480" height="130" fill="#090E1A" rx="8"/>
+
+  <!-- Monogram container: thin rounded square -->
+  <rect x="16" y="18" width="82" height="82" rx="12" fill="#162035" stroke="#C9A84C" stroke-width="1.5"/>
+
+  <!-- Inner decorative corner marks -->
+  <path d="M 24 26 L 24 32 M 24 26 L 30 26" stroke="#C9A84C" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+  <path d="M 90 26 L 90 32 M 90 26 L 84 26" stroke="#C9A84C" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+  <path d="M 24 92 L 24 86 M 24 92 L 30 92" stroke="#C9A84C" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+  <path d="M 90 92 L 90 86 M 90 92 L 84 92" stroke="#C9A84C" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- LNL monogram in elegant serif -->
+  <text x="57" y="73" font-family="'Cormorant Garamond', 'Georgia', serif"
+        font-size="38" font-weight="400" fill="#C9A84C"
+        text-anchor="middle" letter-spacing="1">LNL</text>
+
+  <!-- Thin rule beneath monogram inside box -->
+  <line x1="28" y1="80" x2="86" y2="80" stroke="#C9A84C" stroke-width="0.6" opacity="0.4"/>
+
+  <!-- Wordmark stacked -->
+  <text x="118" y="48" font-family="'Cormorant Garamond', 'Georgia', serif" font-size="20" font-weight="400" fill="#EEE8D8" letter-spacing="5">LAKE NORMAN</text>
+
+  <!-- Horizontal gold rule -->
+  <line x1="118" y1="58" x2="420" y2="58" stroke="#C9A84C" stroke-width="0.7" opacity="0.35"/>
+
+  <text x="118" y="76" font-family="'Cormorant Garamond', 'Georgia', serif" font-size="20" font-weight="300" fill="#C9A84C" letter-spacing="10">LEDGER</text>
+
+  <!-- Tagline -->
+  <text x="119" y="100" font-family="'Cormorant Garamond', 'Georgia', serif" font-size="10" fill="#4F637D" letter-spacing="3.5">PROFESSIONAL BOOKKEEPING · CHARLOTTE, NC</text>
+</svg>
