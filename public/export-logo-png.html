@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Export Logo PNG — Lake Norman Ledger</title>
+  <style>
+    body {
+      background: #090E1A;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+    h1 { color: #C9A84C; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 32px; }
+    #preview { border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; margin-bottom: 32px; max-width: 400px; }
+    .btn {
+      background: #C9A84C;
+      color: #090E1A;
+      border: none;
+      padding: 14px 40px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      margin: 8px;
+    }
+    .btn:hover { background: #E5C97A; }
+    .btn.outline {
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: #C9A84C;
+    }
+    .btn.outline:hover { border-color: #C9A84C; }
+    p { color: #4F637D; font-size: 12px; margin-top: 20px; letter-spacing: 0.5px; }
+    canvas { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Export Logo</h1>
+  <img id="preview" src="logo-social.svg" width="400" height="400" alt="Logo preview"/>
+  <canvas id="canvas"></canvas>
+  <div>
+    <button class="btn" onclick="exportPNG(1000)">Download PNG — 1000×1000</button>
+    <button class="btn outline" onclick="exportPNG(500)">Download PNG — 500×500</button>
+  </div>
+  <p>Recommended: 1000×1000 for LinkedIn, Facebook, Instagram, and Google profiles</p>
+
+  <script>
+    function exportPNG(size) {
+      const canvas = document.getElementById('canvas');
+      canvas.width  = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+
+      const img = new Image();
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, size, size);
+        const link = document.createElement('a');
+        link.download = 'lake-norman-ledger-logo-' + size + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      };
+      // Use a blob URL to avoid cross-origin issues with local files
+      fetch('logo-social.svg')
+        .then(r => r.text())
+        .then(svgText => {
+          const blob = new Blob([svgText], { type: 'image/svg+xml' });
+          img.src = URL.createObjectURL(blob);
+        });
+    }
+  </script>
+</body>
+</html>
