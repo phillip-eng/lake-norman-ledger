@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>Export Logo PNG — Lake Norman Ledger</title>
+  <title>Export Assets — Lake Norman Ledger</title>
   <style>
     body {
       background: #090E1A;
@@ -10,25 +10,46 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       margin: 0;
-      padding: 40px;
+      padding: 60px 40px;
       box-sizing: border-box;
     }
-    h1 { color: #C9A84C; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 32px; }
-    #preview { border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; margin-bottom: 32px; width: 400px; height: 400px; }
+    h1 { color: #C9A84C; font-size: 13px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 60px; }
+    .section {
+      width: 100%;
+      max-width: 860px;
+      margin-bottom: 60px;
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 14px;
+      padding: 40px;
+      background: #101828;
+    }
+    .section-title {
+      color: #8B9EBB;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    canvas.preview {
+      display: block;
+      border-radius: 10px;
+      border: 1px solid rgba(201,168,76,0.2);
+      margin-bottom: 24px;
+      max-width: 100%;
+    }
+    canvas.hidden { display: none; }
     .btn {
       background: #C9A84C;
       color: #090E1A;
       border: none;
-      padding: 14px 40px;
-      font-size: 15px;
+      padding: 12px 32px;
+      font-size: 14px;
       font-weight: 700;
       border-radius: 8px;
       cursor: pointer;
       letter-spacing: 1px;
-      margin: 8px;
+      margin: 6px;
     }
     .btn:hover { background: #E5C97A; }
     .btn.outline {
@@ -37,23 +58,38 @@
       color: #C9A84C;
     }
     .btn.outline:hover { border-color: #C9A84C; }
-    p { color: #4F637D; font-size: 12px; margin-top: 20px; letter-spacing: 0.5px; }
-    canvas { display: none; }
+    .note { color: #4F637D; font-size: 11px; margin-top: 16px; letter-spacing: 0.5px; line-height: 1.7; }
   </style>
 </head>
 <body>
-  <h1>Export Logo</h1>
-  <canvas id="preview" width="400" height="400"></canvas>
-  <canvas id="canvas"></canvas>
-  <div>
-    <button class="btn" onclick="exportPNG(1000)">Download PNG — 1000×1000</button>
-    <button class="btn outline" onclick="exportPNG(500)">Download PNG — 500×500</button>
+  <h1>Lake Norman Ledger — Asset Exports</h1>
+
+  <!-- ── LOGO ── -->
+  <div class="section">
+    <div class="section-title">Profile Logo — Square</div>
+    <canvas id="logoPreview" class="preview" width="400" height="400"></canvas>
+    <canvas id="logoCanvas" class="hidden"></canvas>
+    <div>
+      <button class="btn" onclick="exportAsset('logo', 1000, 1000)">Download PNG — 1000×1000</button>
+      <button class="btn outline" onclick="exportAsset('logo', 500, 500)">Download PNG — 500×500</button>
+    </div>
+    <p class="note">Recommended: 1000×1000 for LinkedIn, Facebook, Instagram, and Google Business profile photos.</p>
   </div>
-  <p>Recommended: 1000×1000 for LinkedIn, Facebook, Instagram, and Google profiles</p>
+
+  <!-- ── FACEBOOK COVER ── -->
+  <div class="section">
+    <div class="section-title">Facebook Cover Photo</div>
+    <canvas id="coverPreview" class="preview" width="820" height="312"></canvas>
+    <canvas id="coverCanvas" class="hidden"></canvas>
+    <div>
+      <button class="btn" onclick="exportAsset('cover', 1640, 624)">Download PNG — 1640×624 (Recommended)</button>
+      <button class="btn outline" onclick="exportAsset('cover', 820, 312)">Download PNG — 820×312</button>
+    </div>
+    <p class="note">Facebook recommended cover size: 1640×624 px (2× for sharp display). Safe zone keeps key content away from edges and profile photo overlap on mobile.</p>
+  </div>
 
   <script>
-    // SVG embedded directly — no fetch needed
-    const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+    const logoSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
   <rect width="1000" height="1000" fill="#090E1A"/>
   <line x1="0" y1="500" x2="1000" y2="500" stroke="#C9A84C" stroke-width="0.5" opacity="0.06"/>
   <line x1="500" y1="0" x2="500" y2="1000" stroke="#C9A84C" stroke-width="0.5" opacity="0.06"/>
@@ -77,36 +113,85 @@
   <line x1="350" y1="788" x2="650" y2="788" stroke="#C9A84C" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
 </svg>`;
 
-    const svgBlob = new Blob([svgMarkup], { type: 'image/svg+xml' });
-    const svgUrl  = URL.createObjectURL(svgBlob);
+    const coverSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 312" width="820" height="312">
+  <rect width="820" height="312" fill="#090E1A"/>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C9A84C" stroke-width="0.3" opacity="0.12"/>
+    </pattern>
+    <radialGradient id="glow" cx="30%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#090E1A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="820" height="312" fill="url(#grid)"/>
+  <rect width="820" height="312" fill="url(#glow)"/>
+  <path d="M 28 56 L 28 28 L 56 28" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+  <path d="M 792 56 L 792 28 L 764 28" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+  <path d="M 28 256 L 28 284 L 56 284" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+  <path d="M 792 256 L 792 284 L 764 284" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.45"/>
+  <rect x="52" y="86" width="62" height="80" rx="4" fill="none" stroke="#C9A84C" stroke-width="1.5" opacity="0.35"/>
+  <rect x="62" y="76" width="62" height="80" rx="4" fill="#162035" stroke="#C9A84C" stroke-width="1.5"/>
+  <line x1="62" y1="76" x2="62" y2="156" stroke="#C9A84C" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="74" y1="93" x2="112" y2="93" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="74" y1="106" x2="112" y2="106" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="74" y1="119" x2="112" y2="119" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="74" y1="132" x2="112" y2="132" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="100" y1="78" x2="100" y2="152" stroke="#C9A84C" stroke-width="0.8" opacity="0.4"/>
+  <text x="140" y="112" font-family="Georgia, serif" font-size="18" fill="#EEE8D8" letter-spacing="4">LAKE NORMAN</text>
+  <text x="140" y="136" font-family="Georgia, serif" font-size="18" fill="#C9A84C" letter-spacing="9">LEDGER</text>
+  <line x1="140" y1="148" x2="330" y2="148" stroke="#C9A84C" stroke-width="0.6" opacity="0.35"/>
+  <text x="141" y="163" font-family="Georgia, serif" font-size="9.5" fill="#4F637D" letter-spacing="2.5" font-style="italic">Professional Bookkeeping</text>
+  <line x1="52" y1="184" x2="330" y2="184" stroke="#C9A84C" stroke-width="0.5" opacity="0.2"/>
+  <text x="52" y="204" font-family="Georgia, serif" font-size="10" fill="#8B9EBB" letter-spacing="1">Phillip@lakenormanledger.com</text>
+  <text x="52" y="220" font-family="Georgia, serif" font-size="10" fill="#8B9EBB" letter-spacing="1">(559) 360-9334  ·  Lake Norman, NC  ·  Fully Remote</text>
+  <text x="52" y="250" font-family="Georgia, serif" font-size="11" fill="#C9A84C" letter-spacing="0.5" font-style="italic">Owned &amp; Operated by a Licensed CPA</text>
+  <line x1="368" y1="44" x2="368" y2="268" stroke="#C9A84C" stroke-width="0.7" opacity="0.25"/>
+  <text x="600" y="60" font-family="Georgia, serif" font-size="9" fill="#C9A84C" text-anchor="middle" letter-spacing="4" opacity="0.85">WHAT WE OFFER</text>
+  <line x1="400" y1="70" x2="800" y2="70" stroke="#C9A84C" stroke-width="0.6" opacity="0.25"/>
+  <text x="400" y="104" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#EEE8D8" letter-spacing="0.5">Monthly Bookkeeping</text>
+  <text x="400" y="120" font-family="Georgia, serif" font-size="10.5" fill="#8B9EBB">Accurate, tax-ready books delivered every month — on time.</text>
+  <line x1="400" y1="134" x2="800" y2="134" stroke="#C9A84C" stroke-width="0.5" opacity="0.18"/>
+  <text x="400" y="158" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#EEE8D8" letter-spacing="0.5">Cleanup &amp; Catch-Up</text>
+  <text x="400" y="174" font-family="Georgia, serif" font-size="10.5" fill="#8B9EBB">Behind on your books? We rebuild and organize everything fast.</text>
+  <line x1="400" y1="188" x2="800" y2="188" stroke="#C9A84C" stroke-width="0.5" opacity="0.18"/>
+  <text x="400" y="212" font-family="Georgia, serif" font-size="13.5" font-weight="bold" fill="#EEE8D8" letter-spacing="0.5">Consulting &amp; Training</text>
+  <text x="400" y="228" font-family="Georgia, serif" font-size="10.5" fill="#8B9EBB">QuickBooks Online setup, training, and periodic accuracy reviews.</text>
+  <line x1="400" y1="244" x2="800" y2="244" stroke="#C9A84C" stroke-width="0.6" opacity="0.25"/>
+  <text x="600" y="266" font-family="Georgia, serif" font-size="10" fill="#C9A84C" text-anchor="middle" letter-spacing="3" opacity="0.8">lakenormanledger.com</text>
+</svg>`;
 
-    // Draw preview
-    const previewCanvas = document.getElementById('preview');
-    const pCtx = previewCanvas.getContext('2d');
-    const previewImg = new Image();
-    previewImg.onload = () => pCtx.drawImage(previewImg, 0, 0, 400, 400);
-    previewImg.src = svgUrl;
+    const assets = { logo: logoSVG, cover: coverSVG };
 
-    // Style the preview canvas like a box
-    previewCanvas.style.display = 'block';
-    previewCanvas.style.borderRadius = '12px';
-    previewCanvas.style.border = '1px solid rgba(201,168,76,0.2)';
-    previewCanvas.style.marginBottom = '32px';
-
-    function exportPNG(size) {
-      const canvas = document.getElementById('canvas');
-      canvas.width  = size;
-      canvas.height = size;
+    function drawPreview(svgStr, canvasId, w, h) {
+      const canvas = document.getElementById(canvasId);
+      canvas.width = w; canvas.height = h;
       const ctx = canvas.getContext('2d');
       const img = new Image();
+      const blob = new Blob([svgStr], { type: 'image/svg+xml' });
+      img.onload = () => ctx.drawImage(img, 0, 0, w, h);
+      img.src = URL.createObjectURL(blob);
+    }
+
+    drawPreview(logoSVG,  'logoPreview',  400, 400);
+    drawPreview(coverSVG, 'coverPreview', 820, 312);
+
+    function exportAsset(type, w, h) {
+      const svgStr = assets[type];
+      const canvas = document.getElementById(type + 'Canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      const blob = new Blob([svgStr], { type: 'image/svg+xml' });
       img.onload = function() {
-        ctx.drawImage(img, 0, 0, size, size);
+        ctx.drawImage(img, 0, 0, w, h);
         const link = document.createElement('a');
-        link.download = 'lake-norman-ledger-logo-' + size + '.png';
+        link.download = type === 'logo'
+          ? 'lake-norman-ledger-logo-' + w + '.png'
+          : 'lake-norman-ledger-facebook-cover-' + w + '.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
       };
-      const blob = new Blob([svgMarkup], { type: 'image/svg+xml' });
       img.src = URL.createObjectURL(blob);
     }
   </script>
