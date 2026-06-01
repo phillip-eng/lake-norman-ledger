@@ -17,7 +17,7 @@
       box-sizing: border-box;
     }
     h1 { color: #C9A84C; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 32px; }
-    #preview { border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; margin-bottom: 32px; max-width: 400px; }
+    #preview { border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; margin-bottom: 32px; width: 400px; height: 400px; }
     .btn {
       background: #C9A84C;
       color: #090E1A;
@@ -43,7 +43,7 @@
 </head>
 <body>
   <h1>Export Logo</h1>
-  <img id="preview" src="logo-social.svg" width="400" height="400" alt="Logo preview"/>
+  <canvas id="preview" width="400" height="400"></canvas>
   <canvas id="canvas"></canvas>
   <div>
     <button class="btn" onclick="exportPNG(1000)">Download PNG — 1000×1000</button>
@@ -52,12 +52,52 @@
   <p>Recommended: 1000×1000 for LinkedIn, Facebook, Instagram, and Google profiles</p>
 
   <script>
+    // SVG embedded directly — no fetch needed
+    const svgMarkup = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <rect width="1000" height="1000" fill="#090E1A"/>
+  <line x1="0" y1="500" x2="1000" y2="500" stroke="#C9A84C" stroke-width="0.5" opacity="0.06"/>
+  <line x1="500" y1="0" x2="500" y2="1000" stroke="#C9A84C" stroke-width="0.5" opacity="0.06"/>
+  <path d="M 60 60 L 60 120 M 60 60 L 120 60" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 940 60 L 940 120 M 940 60 L 880 60" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 60 940 L 60 880 M 60 940 L 120 940" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <path d="M 940 940 L 940 880 M 940 940 L 880 940" stroke="#C9A84C" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+  <rect x="338" y="188" width="220" height="290" rx="16" fill="none" stroke="#C9A84C" stroke-width="6" opacity="0.35"/>
+  <rect x="370" y="160" width="220" height="290" rx="16" fill="#162035" stroke="#C9A84C" stroke-width="6"/>
+  <line x1="370" y1="160" x2="370" y2="450" stroke="#C9A84C" stroke-width="12" stroke-linecap="round"/>
+  <line x1="410" y1="215" x2="568" y2="215" stroke="#C9A84C" stroke-width="5" stroke-linecap="round"/>
+  <line x1="410" y1="255" x2="568" y2="255" stroke="#C9A84C" stroke-width="5" stroke-linecap="round"/>
+  <line x1="410" y1="295" x2="568" y2="295" stroke="#C9A84C" stroke-width="5" stroke-linecap="round"/>
+  <line x1="410" y1="335" x2="568" y2="335" stroke="#C9A84C" stroke-width="5" stroke-linecap="round"/>
+  <line x1="410" y1="375" x2="568" y2="375" stroke="#C9A84C" stroke-width="5" stroke-linecap="round"/>
+  <line x1="528" y1="168" x2="528" y2="442" stroke="#C9A84C" stroke-width="3.5" opacity="0.4"/>
+  <text x="500" y="555" font-family="Georgia, serif" font-size="68" fill="#EEE8D8" text-anchor="middle" letter-spacing="14">LAKE NORMAN</text>
+  <line x1="160" y1="590" x2="840" y2="590" stroke="#C9A84C" stroke-width="2" opacity="0.4"/>
+  <text x="500" y="670" font-family="Georgia, serif" font-size="68" fill="#C9A84C" text-anchor="middle" letter-spacing="28">LEDGER</text>
+  <text x="500" y="750" font-family="Georgia, serif" font-size="26" fill="#4F637D" text-anchor="middle" letter-spacing="6" font-style="italic">Professional Bookkeeping</text>
+  <line x1="350" y1="788" x2="650" y2="788" stroke="#C9A84C" stroke-width="1.5" opacity="0.3" stroke-linecap="round"/>
+</svg>`;
+
+    const svgBlob = new Blob([svgMarkup], { type: 'image/svg+xml' });
+    const svgUrl  = URL.createObjectURL(svgBlob);
+
+    // Draw preview
+    const previewCanvas = document.getElementById('preview');
+    const pCtx = previewCanvas.getContext('2d');
+    const previewImg = new Image();
+    previewImg.onload = () => pCtx.drawImage(previewImg, 0, 0, 400, 400);
+    previewImg.src = svgUrl;
+
+    // Style the preview canvas like a box
+    previewCanvas.style.display = 'block';
+    previewCanvas.style.borderRadius = '12px';
+    previewCanvas.style.border = '1px solid rgba(201,168,76,0.2)';
+    previewCanvas.style.marginBottom = '32px';
+
     function exportPNG(size) {
       const canvas = document.getElementById('canvas');
       canvas.width  = size;
       canvas.height = size;
       const ctx = canvas.getContext('2d');
-
       const img = new Image();
       img.onload = function() {
         ctx.drawImage(img, 0, 0, size, size);
@@ -66,13 +106,8 @@
         link.href = canvas.toDataURL('image/png');
         link.click();
       };
-      // Use a blob URL to avoid cross-origin issues with local files
-      fetch('logo-social.svg')
-        .then(r => r.text())
-        .then(svgText => {
-          const blob = new Blob([svgText], { type: 'image/svg+xml' });
-          img.src = URL.createObjectURL(blob);
-        });
+      const blob = new Blob([svgMarkup], { type: 'image/svg+xml' });
+      img.src = URL.createObjectURL(blob);
     }
   </script>
 </body>
